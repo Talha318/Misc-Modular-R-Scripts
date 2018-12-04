@@ -1,0 +1,19 @@
+### This code snippit checks to see if the user has the necessary R packages installed on their machine.
+### If the user is missing any packages then the missing package is installed and loaded for use prior
+### to the execution of the actual code.
+###
+###
+### "requiredpackages" is a character vector of all packages necessary to run the R script. 
+
+  requiredpackages = as.vector(c("tidyverse", "readxl", "lubridate", "zoo", "xlsx", "writexl"))
+  NP = as.list(requiredpackages)
+  
+  installedpackages = installed.packages()[, "Package"]
+  neededpackages = requiredpackages[!(requiredpackages %in% installedpackages)]
+  
+  if ( length(neededpackages) > 0 )
+    {install.packages(neededpackages)
+  }
+  
+  lapply(NP, require, character.only = TRUE)
+  rm(requiredpackages, installedpackages, neededpackages, NP)
